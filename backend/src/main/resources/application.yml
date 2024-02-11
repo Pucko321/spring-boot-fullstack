@@ -1,0 +1,33 @@
+server:
+  port: 8080
+  error:
+    include-message: always # default = never, to prevent leak of pii (personal identifiable information)
+# docker compose up -d --- build (re)create and start up container
+# docker compose start --- start container
+# docker compose stop --- stop container
+# docker compose down --- stop and remove container
+# docker exec -it postgres bash --- connect to container
+# psql -U amigoscode --- after -^
+# \l --- after -^
+# \c xDbName --- after -^
+# docker (compose) ps --- list running containers
+# docker stop xContainerName
+
+# ./mvnw xAction --- run maven command
+# java -jar target/xJarFile-SNAPSHOT.jar --- run jar file
+# ahead-of-time-processing --- maven config for fast website?
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/customer
+    username: amigoscode
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+  main:
+    web-application-type: servlet
