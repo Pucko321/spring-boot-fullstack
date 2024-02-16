@@ -35,3 +35,4 @@ build/
 ### From Amigoscode ###
 **/node_modules
 **/.DS_store
+**/docker-compose.yml
