@@ -27,8 +27,8 @@ class CustomerRepositoryTest extends AbstractTestcontainers {
         Customer testCustomer = new Customer(
                 "Test name",
                 "test-" + UUID.randomUUID() + "@gmail.com",
-                1
-        );
+                1,
+                Gender.FEMALE);
         underTest.save(testCustomer);
         System.out.println("Beans " + applicationContext.getBeanDefinitionCount());
     }
@@ -38,8 +38,8 @@ class CustomerRepositoryTest extends AbstractTestcontainers {
         Customer testCustomer = new Customer(
                 "Test name",
                 "test-" + UUID.randomUUID() + "@gmail.com",
-                1
-        );
+                1,
+                Gender.FEMALE);
         underTest.save(testCustomer);
 
         boolean customerExistWithEmail = underTest.existsCustomerByEmail(testCustomer.getEmail());

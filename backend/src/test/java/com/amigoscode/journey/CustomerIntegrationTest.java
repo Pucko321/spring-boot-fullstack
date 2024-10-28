@@ -3,6 +3,7 @@ package com.amigoscode.journey;
 import com.amigoscode.customer.Customer;
 import com.amigoscode.customer.CustomerRegistrationRequest;
 import com.amigoscode.customer.CustomerUpdateRequest;
+import com.amigoscode.customer.Gender;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,8 +31,9 @@ public class CustomerIntegrationTest {
         String name = "Test name";
         String email = "test26@gmail.com";
         Integer age = 3;
+        Gender gender = Gender.FEMALE;
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, age
+                name, email, age, gender
         );
 
         webTestClient.post()
@@ -54,8 +56,8 @@ public class CustomerIntegrationTest {
                 .getResponseBody();
 
         Customer expectedCustomer = new Customer(
-                name, email, age
-        );
+                name, email, age,
+                gender);
 
         assertThat(allCustomers)
                 .isNotNull() // added by me
@@ -98,8 +100,9 @@ public class CustomerIntegrationTest {
         String name = "Test name";
         String email = "test27@gmail.com";
         Integer age = 3;
+        Gender gender = Gender.FEMALE;
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, age
+                name, email, age, gender
         );
 
         webTestClient.post()
@@ -151,8 +154,9 @@ public class CustomerIntegrationTest {
         String oldName = "Test name";
         String oldEmail = "test28@gmail.com";
         Integer oldAge = 3;
+        Gender oldGender = Gender.FEMALE;
         CustomerRegistrationRequest registrationRequest = new CustomerRegistrationRequest(
-                oldName, oldEmail, oldAge
+                oldName, oldEmail, oldAge, oldGender
         );
         webTestClient.post()
                 .uri(CUSTOMER_URI)
@@ -213,6 +217,7 @@ public class CustomerIntegrationTest {
         assertThat(changedCustomer.getName()).isEqualTo(newName);
         assertThat(changedCustomer.getEmail()).isEqualTo(newEmail);
         assertThat(changedCustomer.getAge()).isEqualTo(newAge);
+        assertThat(changedCustomer.getGender()).isEqualTo(oldGender);
 
         webTestClient.delete() // so I can run more than once
                 .uri(CUSTOMER_URI + "/{customerId}", customerId)

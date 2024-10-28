@@ -3,14 +3,12 @@ package com.amigoscode.customer;
 import com.amigoscode.AbstractTestcontainers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
 
@@ -30,8 +28,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         Customer customer = new Customer(
                 "Test name",
                 "test-" + UUID.randomUUID() + "@gmail.com",
-                1
-        );
+                1,
+                Gender.FEMALE);
         underTest.insertCustomer(customer);
 
         List<Customer> customers = underTest.selectAllCustomers();
@@ -45,8 +43,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         Customer testCustomer = new Customer(
                 "Test name",
                 email,
-                1
-        );
+                1,
+                Gender.FEMALE);
         underTest.insertCustomer(testCustomer);
 
         int id = underTest.selectAllCustomers().stream()
@@ -82,8 +80,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         Customer testCustomer = new Customer(
                 "Test name",
                 "test-" + UUID.randomUUID() + "@gmail.com",
-                1
-        );
+                1,
+                Gender.FEMALE);
 
         Optional<Customer> customerResultBeforeInsert = underTest.selectAllCustomers().stream()
                 .filter(customer -> customer.getEmail().equals(testCustomer.getEmail()))
@@ -109,8 +107,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         Customer testCustomer = new Customer(
                 "Test name",
                 "test-" + UUID.randomUUID() + "@gmail.com",
-                1
-        );
+                1,
+                Gender.FEMALE);
 
         underTest.insertCustomer(testCustomer);
         boolean testCustomerExist = underTest.existsPersonWithEmail(testCustomer.getEmail());
@@ -134,8 +132,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         Customer testCustomer = new Customer(
                 "Test name",
                 email,
-                1
-        );
+                1,
+                Gender.FEMALE);
         underTest.insertCustomer(testCustomer);
         int id = underTest.selectAllCustomers().stream()
                 .filter(customer -> customer.getEmail().equals(email))
@@ -168,8 +166,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         Customer testCustomer = new Customer(
                 "Test name",
                 email,
-                1
-        );
+                1,
+                Gender.FEMALE);
 
         underTest.insertCustomer(testCustomer);
         int id = underTest.selectAllCustomers().stream()
@@ -189,13 +187,13 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         Customer oldCustomer = new Customer(
                 "Old Test Name",
                 oldEmail,
-                1
-        );
+                1,
+                Gender.FEMALE);
         Customer newCustomer = new Customer(
                 "New Test Name",
                 "new" + oldEmail,
-                2
-        );
+                2,
+                Gender.FEMALE);
 
         underTest.insertCustomer(oldCustomer);
         Long id = underTest.selectAllCustomers().stream()
@@ -213,6 +211,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
                     assertThat(customer.getName()).isEqualTo(newCustomer.getName());
                     assertThat(customer.getEmail()).isEqualTo(newCustomer.getEmail());
                     assertThat(customer.getAge()).isEqualTo(newCustomer.getAge());
+                    assertThat(customer.getGender()).isEqualTo(oldCustomer.getGender());
                 });
     }
 }
